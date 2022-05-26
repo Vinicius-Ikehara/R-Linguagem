@@ -1,0 +1,56 @@
+#DADOS EM PAINEL
+
+# IMPORTAR ARQUIVO energia 
+View(energia)
+attach(energia)
+library(foreign)
+library(plm)
+library(lmtest)
+
+#ativar plm no rstudio
+
+#verificar numero de linhas no arquivo energia
+x<-nrow(energia);x
+
+#colocar o arquivo no formato de painel, onde 8 é o período
+dados.plm<-pdata.frame(energia,x/8);dados.plm
+
+attach(dados.plm)
+
+#modelo de regressão
+reg<-v~bp+dre
+
+#Regressão em painel para modelo pooled
+reg.pols<-plm(reg,data=dados.plm,model="pooling");summary(reg.pols)
+
+
+#Wooldridge's test for unobserved individual effects
+pwtest(reg.pols)
+
+#Test t dos coeficientes qdo variancias são heterocedásticas	
+coftest(reg.pols,vcov= function(reg.pols)vcovHC(reg.pols,method = "arellano",type="HC1",cluster = "group"))
+
+
+#Regressão em painel para modelo aleatório
+reg.re<-plm(reg,data=dados.plm,model = "random");summary(reg.re)
+
+
+#Regressão em painel para modelo fixo
+reg.fe<-plm(reg,data=dados.plm,model = "within");summary(reg.fe)
+
+#Teste de Hausman (aleatorio x fixo)
+phtest(reg.fe,reg.re)
+
+#Teste Chow (pooled x fixo)
+pooltest(reg.pols,reg.fe)
+
+#Teste de Bruesch-Pagan (pooled x aleatório)
+plmtest(reg.pols, type="bp")
+
+	
+
+
+
+
+
+

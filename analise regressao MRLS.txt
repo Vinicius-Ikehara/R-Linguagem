@@ -1,0 +1,77 @@
+Importar arquivo dados.txt
+
+attach(dados)
+
+names(dados)
+
+m<-lm(Y~X)
+
+summary(m)
+
+residuals(m)
+
+
+## gráfico de probablidade Normal
+
+## Q-Q Plot, histograma e boxplot (Análise Informal)
+
+qqPlot(m, main="QQ Plot") #qq plot para resíduos estudentizados 
+
+qqnorm(residuals(m), ylab = "Resíduos")
+
+qqline(residuals(m))
+
+hist(residuals(m))
+
+boxplot(residuals(m))
+
+plot(density(residuals(m)))
+
+
+## teste de Shapiro-Wilk (Análise Formal)
+
+shapiro.test(residuals(m))
+
+require(nortest)
+
+lillie.test(residuals(lm(Y~X),data=dados))
+
+
+## teste de independencia dos resíduos
+
+require(lmtest)
+
+dwtest(m, alternative ="two.sided")
+
+
+# teste de homocedasticidade
+
+r<-sort(residuals(m))
+
+r1<-r[1:3]
+
+var(r1)
+
+r2<-r[4:6]
+
+var(r2)
+
+F<-var(r1)/var(r2)
+
+F
+
+qf(0.95,2,2) # retorna o quantil
+
+2*(1-pf(F,2,2)) # retorna o p-valor
+
+var.test(r1,r2, alternative = "two.sided")
+
+## Teste de levene e bartlett => não tem fator então não faz sentido
+
+#require(car)
+
+#leveneTest(X,Y, center=median) # testa a homogeneidade entre os X não depende de normalidade
+
+#bartlett.test(Y~X,data = dados) # testa a homogeneidade entre os X depende de normalidade
+
+plot(Y~X, data = dados)

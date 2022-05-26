@@ -1,0 +1,50 @@
+dados<-(dados_venda_preco_promocao)
+attach(dados)
+
+plot(dados)# retorna gráficos de dispersão entre as variáveis envolvidas
+
+# ajuste do MRLM com duas variáveis independentes Preço e Promoção
+
+m1<-lm(Vendas~Preco+Promocao)
+summary(m1)
+summary(aov(m1))
+
+### ilustrando o teste F parcial
+#require(car)
+require(car)
+m3<-lm(Vendas~Promocao+Preco)
+summary(m3) # teste t
+Anova(m3, type="II") # teste F parcial
+
+# pressupostos do modelo de MRLM
+
+# teste para falta de ajuste
+m1<-lm(Vendas~Preco+Promocao)
+m2<-aov(Vendas~factor(Preco)*factor(Promocao))
+summary(m2)
+anova(m1,m2) # teste para falta de ajuste
+
+
+shapiro.test(residuals(m3))
+require(lmtest)
+dwtest(m3,alternative="two.sided")
+require(car)
+bartlett.test(Vendas~Preco)
+bartlett.test(Vendas~Promocao)
+plot(density(residuals(m3)))
+hist(residuals(m3))
+
+
+# transformação log
+m4<-lm(log(Vendas)~ Preco+Promocao)
+summary(m4) # teste t
+
+# pressupostos
+shapiro.test(residuals(m4))
+require(lmtest)
+dwtest(m4,alternative="two.sided")
+require(car)
+bartlett.test(Vendas~Preco)
+plot(density(residuals(m4)))
+hist(residuals(m4))
+

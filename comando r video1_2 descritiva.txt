@@ -1,0 +1,153 @@
+Análise descritiva no R
+
+Gráficos
+
+Comando plot()
+#Exemplo:
+a <- 1:20
+b <- a^2
+plot(a,b)
+
+#Exemplo:
+a <- 1:20; b <- a^2
+plot(a,b,pch=2)
+points(a,400-b, pch=5) #pch é a representação dos indicadores
+points(a,200-b, pch=10) #pch é a representação dos indicadores
+
+#Exemplo:
+a <- 1:20; b <- a^2
+plot(a,b,type="l",xlab="Período", ylab="Fases",)
+lines(a,2*b,lwd=4) #lwd modifica largura da linha
+lines(a,0.5*b,lty=2) #lwd modifica estilo da linha
+lines(a,3*b,lty=3)
+lines(a,4*b,lty=2,lwd=4)
+title("Representação das tensões trifásicas")
+
+
+
+#Exemplo:
+par(mfrow=c(1,2)) # vários gráficos em uma figura
+x<-1:10
+y<- c(2,5,9,6,7,8,4,1,3,10)
+x;y
+plot(x,y)
+plot (x,y, xlab="Eixo X", ylab="Eixo Y", main="Personalizando um gráfico")
+
+
+
+HISTOGRAMA
+
+#Exemplo:
+rest <- c(96,96,102,102,102,104,104,108,
+ 126,126,128,128,140,156,160,160,164,170,
+ 115,121,118,142,145,145,149,112,152,144,
+122,121,133,134,109,108,107,148,162,96)
+par(mfrow=c(1,2))
+hist(rest)
+hist(rest)
+
+GRAFICO DE BARRAS
+barplot(x, col=" ", legend.text=" ", xlab=" ",ylab=" ")
+x - é o vetor ou arquivo de dados;
+col=” ” - define-se a cor de exibição do gráfico de barras;
+legend.text=” ” - legenda do gráfico (o que representa a altura dos gráficos); xlab=” ” e ylab=” ” - nome das grandezas expressas nos eixos x e y, respecti- vamente.
+x <- c(1,2,3,4,5,6,7)
+barplot(x)
+barplot(euro,xlab="Euro conversions",col="red",
+ legend.text="Valor da taxa")
+
+BOXPLOT
+
+x  = c(5,5,5,13,7,11,11,9,8,9)
+y = c(11,8,4,5,9,5,10,5,4,10)
+boxplot(x,y) #para plotar no mesmo gráfico (comparação)
+boxplot(x) #para plotar em gráficos diferentes
+
+GRAFICO DE SETORES
+pie(dados,opções)
+#Exemplo:
+a<-c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
+names(a)<-c("a","b","c","d","e","f")
+pie(a,col = c("red","blue","green","gray", "brown", "black"))
+
+
+MEDIDAS DE POSIÇÃO
+
+Média
+x <- c(10, 14, 13, 15, 16, 18, 12)
+mean(x) 
+
+Mediana
+k <- c(1,3,0,0,2,4,1,2,5)
+median(k)
+
+g <- c(1,3,0,0,2,4,1,3,5,6)
+median(g) 
+
+Moda
+y <- c(7,8,9,10,10,10,11,12)
+table(y) #frequencia de cada valor
+
+subset(table(y),table(y)==max(table(y))) 
+
+Quartis
+z <- c(5,2,6,9,10,13,15)
+summary(z)
+
+q <- c(48,49,51,50,49)
+quantile(q)
+
+Percentil
+
+percentis = seq(.01,.99,.01)
+quantile(q, percentis)
+
+Decis
+
+quantile(dados, seq(0.10, 0.9, 0.1))
+
+#Exemplo:
+d <- c(48,49,51,50,49)
+quantile(d,seq(0.10,0.9,0.1))
+
+Medidas de dispersão
+
+Amplitude Total
+#Exemplo: 
+a <- c(20,23,23,28,33,37,37,37,40,44)
+max(a) 
+min(a) 
+range(a) 
+Amplitude = max(a)-min(a)
+Amplitude 
+length(a) #número de elementos da série de dados 
+
+Variância e Desvio padrão
+
+var(dados)
+#Exemplo: 
+v <-c(10,11,9,10,10,9,11)
+var(v)
+
+sd(v)
+sqrt(var(v))
+
+Coeficiente de variação
+
+100*sd(dados)/mean(dados)	#dado em porcentagem
+CV = 100*sd(v)/mean(v)
+CV
+
+summary(v)
+
+
+
+
+
+
+
+
+
+
+
+

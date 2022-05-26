@@ -1,0 +1,23 @@
+
+#MODElO SEGUNDO GRAU
+
+dados<-(dados_exemplo9_2)
+attach(dados)
+dados
+m1<-lm(y~x+x2)
+m1
+m2<-lm(y~x+I(x^2))
+m2
+
+summary(aov(m2)) # teste F parcial => modelo com o termo quadrático
+summary(m2) # teste t
+confint(m2) # intervalos de confiança para os parãmetros
+plot(x,y)
+plot(x2,y)
+
+### tudo indica que temos um problema de Multicolinearidade
+
+m1<-lm(y~x)
+summary(m1) 
+summary(aov(m1))
+
